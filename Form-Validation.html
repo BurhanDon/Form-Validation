@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Form-Validation</title>
+</head>
+
+<body>
+    <div class="container">
+        <div style="text-align: center;" id="success" class="alert alert-success fade " role="alert">
+            <strong>Form Submitted</strong> &nbsp;&nbsp; Your Travel form has been Submitted.
+        </div>
+        <div style="text-align: center;" id="fail" class="alert alert-danger fade " role="alert">
+            <strong>Error!</strong> &nbsp;&nbsp;Please fill out your form correctly.
+        </div>
+        <h1>Travel Agency</h1>
+        <form>
+            <div class="form-group">
+                <label for="name">Username</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your Username">
+                <small id="namevalid" class="form-text text-muted invalid-feedback">Username must contains 2-8
+                    characters and should not
+                    starts with a number</small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="text" class="form-control" id="email" placeholder="name@example.com">
+                <small id="namevalid" class="form-text text-muted invalid-feedback">Invalid e-mail Id</small>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone.no</label>
+                <input type="tel" class="form-control" name="phone" id="phone" placeholder="enter phone.no">
+                <small id="namevalid" class="form-text text-muted invalid-feedback">phone.no must be 10 digit
+                    long</small>
+            </div>
+            <div class="form-group">
+                <label for="country">Select Country</label>
+                <select class="form-control" id="country">
+                    <option>Turkey</option>
+                    <option selected>U-A-E (Recommended)</option>
+                    <option>Canada</option>
+                    <option>Japan</option>
+                    <option>Italy</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="address">enter your Address</label>
+                <input class="form-control" name="address" id="address"></input>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Any Message...</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button id="submit" class="btn btn-primary">SUBMIT</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        let name = document.getElementById('name');
+        let email = document.getElementById('email');
+        let phone = document.getElementById('phone');
+        let submit = document.getElementById('submit');
+        let validEmail = false;
+        let validPhone = false;
+        let validUser = false;
+        $('#fail').hide();
+        $('#success').hide();
+
+        name.addEventListener('blur', () => {
+            let regex = /^[a-zA-Z]([0-9a-zA-Z]){3,9}$/;
+            str = name.value;
+            if (regex.test(str)) {
+                name.classList.remove('is-invalid');
+                validUser = true;
+            } else {
+                name.classList.add('is-invalid');
+                validUser = false;
+            };
+        });
+        email.addEventListener('blur', () => {
+            let regex = /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,8}$/;
+            str = email.value;
+            if (regex.test(str)) {
+                email.classList.remove('is-invalid');
+                validEmail = true;
+            } else {
+                email.classList.add('is-invalid');
+                validEmail = false;
+            };
+        });
+        phone.addEventListener('blur', () => {
+            let regex = /^([?+0-9]){13}$/;
+            str = phone.value;
+            if (regex.test(str)) {
+                phone.classList.remove('is-invalid');
+                validPhone = true;
+            } else {
+                phone.classList.add('is-invalid');
+                validPhone = false;
+            };
+        });
+
+        submit.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (validEmail && validPhone && validUser) {
+                let success = document.getElementById('success');
+                let fail = document.getElementById('fail');
+                success.classList.add('show');
+                // fail.classList.remove('show');
+                $('#success').show();
+                $('#fail').hide();
+                setTimeout(() => {
+                    $('#success').hide();
+                }, 5000);
+            } else {
+                let fail = document.getElementById('fail');
+                let success = document.getElementById('success');
+                fail.classList.add('show');
+                // success.classList.remove('show');
+                $('#success').hide();
+                $('#fail').show();
+
+                setTimeout(() => {
+                    $('#fail').hide();
+                }, 5000);
+            };
+        });
+    </script>
+</body>
+
+</html>
